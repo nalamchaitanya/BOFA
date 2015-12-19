@@ -1,11 +1,15 @@
 #include <stdio.h>
 
-unsigned int get_rsp()
+unsigned long get_rsp()
 {
-	__asm__ ("mov %esp,%eax");
+	__asm__
+	(
+		"nop;"
+		"mov %rsp,%rax;"
+	);
 }
 
 void main()
 {
-	printf("0x%x\n",get_rsp());
+	printf("0x%lx\n",get_rsp());
 }

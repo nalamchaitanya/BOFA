@@ -12,7 +12,7 @@ get_rsp:
 	.cfi_def_cfa_register 6
 #APP
 # 5 "esp.c" 1
-	mov %esp %eax
+	nop;mov %rsp,%rax;
 # 0 "" 2
 #NO_APP
 	popq	%rbp
@@ -23,7 +23,7 @@ get_rsp:
 	.size	get_rsp, .-get_rsp
 	.section	.rodata
 .LC0:
-	.string	"0x%x\n"
+	.string	"0x%lx\n"
 	.text
 	.globl	main
 	.type	main, @function
@@ -37,7 +37,7 @@ main:
 	.cfi_def_cfa_register 6
 	movl	$0, %eax
 	call	get_rsp
-	movl	%eax, %esi
+	movq	%rax, %rsi
 	movl	$.LC0, %edi
 	movl	$0, %eax
 	call	printf
