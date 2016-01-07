@@ -13,15 +13,15 @@ main:
 	.cfi_offset 6, -16
 	movq	%rsp, %rbp
 	.cfi_def_cfa_register 6
-	subq	$16, %rsp
-	movq	$.LC0, -16(%rbp)
-	movq	$0, -8(%rbp)
+	subq	$16, %rsp			## Allocating space for name array of char ptrs.
+	movq	$.LC0, -16(%rbp)	## moving exectable name to first value of array
+	movq	$0, -8(%rbp)		## Then arguments (NULL) ptr as no arguments.
 	movq	-16(%rbp), %rax
 	leaq	-16(%rbp), %rcx
-	movl	$0, %edx
-	movq	%rcx, %rsi
-	movq	%rax, %rdi
-	call	execve
+	movl	$0, %edx			## No environment variables so NULL, last argmnt
+	movq	%rcx, %rsi			## Address of the array of strings(char** name)
+	movq	%rax, %rdi			## Address of the string i.e $.LC0("/bin/sh")
+	call	execve				## calling the function.
 	movl	$0, %edi
 	call	exit
 	.cfi_endproc
