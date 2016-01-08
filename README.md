@@ -55,3 +55,17 @@ This file shows how to find the address of the string kept in the code segment, 
 ###[esp.c](./esp.c),[esp.s](./esp.s)
 
 This program prints the value of stack pointer (%rsp).
+
+###[shellcode.c](./shellcode.c)
+
+Now that we know the address of the string or rather filename we have to prepare the arguments list i.e an array consisting of filename pointer and Null value. So for sake of this we leave 2 quad words(since x86_64 architecture, 64-bits) of gap after the string, below the shellcode. We will construct the array by moving values into this empty space we left (leave empty space by filling any characters) and make it an argument. In the [shellcode.c](./shellcode.c) observe that at the end of the filename spaces are left for this purpose only.
+
+Since we have to copy this shellcode to a buffer to overflow it, it should not contain any NULL bytes i.e a zero byte, whose appearance signifies the end of string and the copying of the string terminates there by not overflowing the buffer and also not copying the entire shellcode. So we tweak the instructions so that NULL byte doesn't appear.
+
+>However this doesn't execute and gives segmentation fault. Guess for a while why this happens?
+
+This happens because our code segment is marked with read only permissions where as we are trying to write the address of the string into the empty space we left, so this gives segmentation fault. So we have to put it in data or stack segment to make it writable however these memory regions are not marked as executable. This is where the rule of W xor X comes to play. However we can give executable permissions to stack by using the flag ```-zexecstack```.
+
+We have written assembly code however we can't copy it into the stack and overflow it, for that we need machine code which we get by disassembling the main function in *shellcode* executable. We will use x/Nx addr to give the N bytes stored from the address addr. We get our assembly code length to be 70 bytes along with the empty space left. We copy the output of gdb into a temporary file, in this case it is [shellcode.txt](./shellcode.txt) which is not corrected for NULL bytes and [corrected_code.txt](./corrected_code.txt)  in which NULL bytes are removed.
+
+From this we need to remove first two columns and spaces, then replace "0x" with "\\x" so that we get a byte code which can be copied to a buffer, which is stored in [shellstring.txt](./shellstring.txt) and correspondingly the [corrected_string.txt](./corrected_string.txt). Since at the time of testing we need to do it multiple number of times, I made a bash script, [shellcode.sh](./shellcode.sh) to do it. You can refer these [1](http://stackoverflow.com/questions/8973450/how-to-select-some-columns-with-awk),[2](http://askubuntu.com/questions/164056/how-do-i-combine-all-lines-in-a-text-file-into-a-single-line),[3](http://askubuntu.com/questions/20414/find-and-replace-text-within-a-file-using-commands),[4](http://osr600doc.sco.com/en/SHL_automate/_Passing_to_shell_script.html) links to make it. And then finally we got the *shellcode*.
