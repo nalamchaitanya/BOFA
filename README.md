@@ -4,7 +4,7 @@
 
 This project is based on the paper [Smashing The Stack For Fun And Profit](http://insecure.org/stf/smashstack.html) by *Aleph One*.
 
-*What is Buffer Overflow Attack?*
+>What is Buffer Overflow Attack?
 
 This is a way of altering the program's execution by overflowing an allocated memory for the program. This is mainly caused due to violation of memory safety. There are different types of attacks based on which memory of the process we are going to overflow. For example Stack overflow,Heap Overflow etc.
 
@@ -68,4 +68,8 @@ This happens because our code segment is marked with read only permissions where
 
 We have written assembly code however we can't copy it into the stack and overflow it, for that we need machine code which we get by disassembling the main function in *shellcode* executable. We will use x/Nx addr to give the N bytes stored from the address addr. We get our assembly code length to be 70 bytes along with the empty space left. We copy the output of gdb into a temporary file, in this case it is [shellcode.txt](./shellcode.txt) which is not corrected for NULL bytes and [corrected_code.txt](./corrected_code.txt)  in which NULL bytes are removed.
 
-From this we need to remove first two columns and spaces, then replace "0x" with "\\x" so that we get a byte code which can be copied to a buffer, which is stored in [shellstring.txt](./shellstring.txt) and correspondingly the [corrected_string.txt](./corrected_string.txt). Since at the time of testing we need to do it multiple number of times, I made a bash script, [shellcode.sh](./shellcode.sh) to do it. You can refer these [1](http://stackoverflow.com/questions/8973450/how-to-select-some-columns-with-awk),[2](http://askubuntu.com/questions/164056/how-do-i-combine-all-lines-in-a-text-file-into-a-single-line),[3](http://askubuntu.com/questions/20414/find-and-replace-text-within-a-file-using-commands),[4](http://osr600doc.sco.com/en/SHL_automate/_Passing_to_shell_script.html) links to make it. And then finally we got the *shellcode*.
+From this we need to remove first two columns and spaces, then replace "0x" with "\\x" so that we get a byte code which can be copied to a buffer, which is stored in [shellstring.txt](./shellstring.txt) and correspondingly the [corrected_string.txt](./corrected_string.txt). Since at the time of testing we need to do it multiple number of times, I made a bash script, [shellcode.sh](./shellcode.sh) to do it. You can refer these [1](http://stackoverflow.com/questions/8973450/how-to-select-some-columns-with-awk),[2](http://askubuntu.com/questions/164056/how-do-i-combine-all-lines-in-a-text-file-into-a-single-line),[3](http://askubuntu.com/questions/20414/find-and-replace-text-within-a-file-using-commands),[4](http://osr600doc.sco.com/en/SHL_automate/_Passing_to_shell_script.html) links to make it. And then finally we got the *__shellcode__*.
+
+###[testSC.c](./testSC.c)
+
+Since we now got the shellcode let us test it and see whether it is working as we want. This file tests the ShellCode by executing it. Use ```-zexecstack``` to compile the file so that it executes without giving segmentation fault.

