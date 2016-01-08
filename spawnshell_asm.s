@@ -17,7 +17,7 @@ main:
 	movq	$0, -8(%rbp)
 #APP
 # 18 "spawnshell_asm.c" 1
-	mov $0x3b,%eax;mov -0x10(%rbp), %rdi;lea -0x10(%rbp), %rsi;mov $0x0, %rdx;syscall; 		## Assembly code written in c file.
+	mov $0x3b,%eax;mov -0x10(%rbp), %rdi;lea -0x10(%rbp), %rsi;mov $0x0, %rdx;syscall; 	## Assembly code written in corresponding c file.
 # 0 "" 2
 #NO_APP
 	popq	%rbp
