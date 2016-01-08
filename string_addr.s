@@ -11,8 +11,8 @@ function:
 	movq	%rsp, %rbp
 	.cfi_def_cfa_register 6
 #APP
-# 5 "string_addr.c" 1
-	jmp .+0x5;pop %rax;leaveq;retq;call .-0x3;.string "/bin/sh";
+# 15 "string_addr.c" 1
+	jmp .+0x5;pop %rax;leaveq;retq;call .-0x3;.string "/bin/sh"; ## Assembly code written in corresponding c file.
 # 0 "" 2
 #NO_APP
 	popq	%rbp
