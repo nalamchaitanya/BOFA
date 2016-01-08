@@ -51,3 +51,7 @@ This file consists the assembly code written for exit system call. We get the sy
 Now that we have the two system call snippets ready, however if you observe in the file [spawnshell_asm.c](./spawnshell_asm.c) we have kept the filename and also the arguments array as statically declared but now we have to encode them also in the assembly (byte code). To do that first we have to place the filename (in this case "/bin/sh") somewhere in memory and know the address where the string lies.
 
 This file shows how to find the address of the string kept in the code segment, and prints the address. To find the address of the string we put it along with the code itself, at the bottom and find its address by using a series of jump and call instructions by using relative addressing with %rip (the instructions pointer).
+
+###[esp.c](./esp.c),[esp.s](./esp.s)
+
+This program prints the value of stack pointer (%rsp).

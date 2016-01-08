@@ -11,8 +11,8 @@ get_rsp:
 	movq	%rsp, %rbp
 	.cfi_def_cfa_register 6
 #APP
-# 5 "esp.c" 1
-	nop;mov %rsp,%rax;
+# 14 "esp.c" 1
+	mov %rsp,%rax;	## Assembly code written in source file.
 # 0 "" 2
 #NO_APP
 	popq	%rbp
@@ -23,7 +23,7 @@ get_rsp:
 	.size	get_rsp, .-get_rsp
 	.section	.rodata
 .LC0:
-	.string	"0x%lx\n"
+	.string	"%#lx\n"
 	.text
 	.globl	main
 	.type	main, @function
