@@ -4,7 +4,7 @@
 
 This project is based on the paper [Smashing The Stack For Fun And Profit](http://insecure.org/stf/smashstack.html) by *Aleph One*.
 
->What is Buffer Overflow Attack?
+>**What is Buffer Overflow Attack?**
 
 This is a way of altering the program's execution by overflowing an allocated memory for the program. This is mainly caused due to violation of memory safety. There are different types of attacks based on which memory of the process we are going to overflow. For example Stack overflow,Heap Overflow etc.
 
@@ -16,9 +16,9 @@ This project demonstrates how to attack the program by overflowing the stack by 
 
  In this project I used **AT&T** syntax for assembly code which you can get familiarised using [Brennan's Guide to Inline Assembly](http://www.delorie.com/djgpp/doc/brennan/brennan_att_inline_djgpp.html). Basic Inline Assembly is enough as far as this project is concerned.
 
- We should be adding the gcc option -fno-stack-protector to prevent any canaries added to the functions and also -zexecstack whenever you want to give executing permissions to the stack which is generally disabled because of **W xor X** permissions i.e a memory should be marked either executable or writable but not both.
+ We should be adding the gcc option ```-fno-stack-protector``` to prevent any canaries added to the functions and also ```-zexecstack``` whenever you want to give executing permissions to the stack which is generally disabled because of **W xor X** permissions i.e a memory should be marked either executable or writable but not both.
 
-##Explanation:
+##SourceCode:
 
  In this project we are mainly  using the fact that the local variables and arrays of a function are allocated in the stack. So by overflowing these buffers (arrays) we can overwrite the return address to which the function goes after completing the function there by taking control over the process.
 
